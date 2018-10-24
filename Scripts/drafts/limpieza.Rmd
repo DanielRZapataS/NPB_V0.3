@@ -1,0 +1,190 @@
+---
+title: "Limpieza"
+author: "Daniel Zapata"
+date: "26 de septiembre de 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(data.table)
+```
+
+```{r}
+#'Convierte la variable "BIRTHDATE" de CRM a formato fecha
+#'@param vector_birthdate Vector con las fechas formato CRM
+#'@return Vector con las fechas formato Date
+#'convertir_fechas_crm()
+convertir_fechas_crm <- function(vector_birthdate) {
+  mes <- substr(vector_birthdate, 3, 5)
+  mes <- ifelse(mes == "", "UNKNOWN", mes)
+  mes <- factor(mes, labels = c("01", "02", "03", "04", "05", "06", "07", "08", "09", 
+                                "10", "11", "12", "UNKNOWN"),
+                levels = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", 
+                           "OCT", "NOV", "DEC", "UNKNOWN"), ordered = TRUE)
+  dia <- substr(vector_birthdate, 1, 2)
+  anio <- substr(vector_birthdate, 6, 9)
+  birthdate <- paste(anio, mes, dia, sep = "-")
+  return(as.Date(birthdate))
+}
+
+```
+
+## R Markdown
+
+```{r}
+crm <- fread("TOTAL_CRM_ACTIVOS.csv")
+crm
+```
+
+Cuales son las variables normalmente de interes ? 
+
+
+```{r}
+var_interest <- c("bb_tipo_doc_pn", "aa_nit",
+  "birthdate", "sex", "nivel_educativo", "mar_status",
+                  "aa_tipo_vivienda", "aa_estrato", "aa_cod_ciiu", 
+                  "hire_dt", "bb_seg_comercial",  "aa_cod_ocupacion",
+                  "cod_ciud_dir_ppal", "aa_vlr_activos",
+                  "aa_vlr_ing_bru_mes", "aa_vlr_egreso_mes",
+                  "aa_vlr_pasivos", "aa_vlr_ventas", "aa_declara_renta")
+names(crm) <- tolower(names(crm))
+crm1 <- crm[, .SD, .SDcols = var_interest]
+crm1
+```
+
+
+
+# filtro personas naturales 
+```{r}
+unique(crm1$bb_tipo_doc_pn)
+```
+
+```{r}
+crm1 <- crm1[bb_tipo_doc_pn %in% c("C", "E")]
+```
+
+# clases 
+```{r}
+sapply(crm1, class)
+```
+# na 
+```{r}
+sapply(crm1,function(x)any(is.na(x)))
+```
+## variables caracter
+```{r}
+char.cols <- names(crm1)[sapply(crm1,is.character)]
+char.cols <- char.cols[which(char.cols %!in% c("birthdate", "hire_dt", "cod_ciud_dir_ppal"))]
+for (name in char.cols){
+  print(sprintf("Unique values for %s:", name))
+  print(unique(crm1[[name]]))
+  }
+```
+
+las clases character esconden Nas 
+
+# birthdate
+```{r}
+head(crm1$birthdate)
+```
+```{r}
+crm1[, nchar(birthdate)] %>% unique %>%  sort()
+```
+```{r}
+crm1[nchar(birthdate) == 0]
+```
+
+```{r}
+crm1[, birthdate := convertir_fechas_crm(birthdate)]
+crm1
+```
+```{r}
+crm1[is.na(birthdate)]
+```
+
+# sex 
+```{r}
+crm1[, .N, by = sex]
+```
+
+# nivel_educativo 
+codigo	nivel
+0	NINGUNO
+1	PRIMARIA
+2	SECUNDARIA
+3	TECNOLOGO
+4	UNIVERSITARIA
+5	ESPECIALIZACION
+N	OTROS
+
+```{r}
+crm1[, .N, by = nivel_educativo][order(-N)]
+```
+
+# mar_status 
+```{r}
+crm1[, .N, by = mar_status][order(-N)]
+```
+
+# aa_tipo_vivienda 
+```{r}
+crm1[, .N, by = aa_tipo_vivienda][order(-N)]
+```
+# hire_dt 
+```{r}
+crm1[, nchar(hire_dt)] %>% unique %>%  sort()
+```
+```{r}
+crm1[, hire_dt := convertir_fechas_crm(hire_dt)]
+crm1
+```
+
+#"cod_ciud_dir_ppal" 
+```{r}
+crm1[cod_ciud_dir_ppal == "", .N]
+```
+#aa_declara_renta
+```{r}
+crm1[aa_declara_renta == "", .N]
+```
+
+# variables numericas 
+
+```{r}
+num.cols <- names(crm1)[sapply(crm1,is.numeric)]
+for (name in num.cols){
+  print(sprintf("Na count values for %s:", name))
+  print(crm[is.na(get(name)), .N])
+  }
+```
+
+# negativos
+
+```{r}
+num.cols <- names(crm1)[sapply(crm1,is.numeric)]
+for (name in num.cols){
+  print(sprintf("Na count values for %s:", name))
+  print(crm[get(name) < 0, .N])
+  }
+```
+ numeros sin coherencia
+```{r}
+num.cols <- names(crm1)[sapply(crm1,is.numeric)]
+for (name in num.cols){
+  print(sprintf("Na count values for %s:", name))
+  print(crm[get(name) < 100000  , .N])
+  }
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+

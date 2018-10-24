@@ -1,0 +1,28 @@
+{
+  "paths": {
+    "scripts_path": "Scripts",
+    "results_path": "Results",
+    "data_path": "Data",
+    "log_path": "Logs",
+    "data_cat": ["Dictionary", "Original", "Staging", "Meta"],
+    "comment": ["tcredito", "crediservice"]
+  },
+ 
+ "modeling":{
+    "train_months": ["201706","201804"],
+    "test_months": ["201805","201806"],
+    "model_alias": "20181009_tcredito",
+    "model_type" : "tcredito"
+  },
+  "scoring":{
+    "model_alias_score": "20181009_tcredito",
+    "dates_to_score":["201807"],
+    "model_type_score":"tcredito",
+    "performance_calculation": "TRUE"
+  },
+  "month_process":{
+    "month_to_create": ["201808"]
+  },
+
+  "job":"Creation"
+}
