@@ -47,6 +47,9 @@ load_paths <- function(){
   scripts_path   <<- paths$scripts_path
 }
 
+#' load_model_parameters
+#' Load model parameters selected from settings by user
+#' @return None (void)
 load_model_parameters <- function(){
   modeling <- fromJSON("settings.json")$modeling
   train_months <<- modeling$train_months
