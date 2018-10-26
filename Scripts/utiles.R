@@ -58,6 +58,9 @@ load_model_parameters <- function(){
   model_type_modeling <<- modeling$model_type
 }
 
+#' load_scoring_parameters
+#' Load scoring parameters selected from settings by user
+#' @return None (void)
 load_scoring_parameters <- function(){
   scoring <- fromJSON("settings.json")$scoring
   model_alias_scoring <<- scoring$model_alias
@@ -66,6 +69,9 @@ load_scoring_parameters <- function(){
   performance_calculation <<- scoring$performance_calculation
 }
 
+#' load_creation_parameters
+#' Load creation table parameters selected from settings by user
+#' @return None (void)
 load_creation_parameters <- function(){
   month_process <- fromJSON("settings.json")$month_process
   month_to_create <<- month_process$month_to_create
@@ -73,7 +79,9 @@ load_creation_parameters <- function(){
   
 }
 
-
+#' load_common_libraries
+#' Load model librarries
+#' @return None (void)
 load_common_libraries <- function(){
   import("jsonlite")
   import("data.table") # data handle
