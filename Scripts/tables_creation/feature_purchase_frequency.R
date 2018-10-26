@@ -30,7 +30,7 @@ feature_purchase_frequency <- function(month_to_create, staging_path, feature_pa
   for(i in 1:length(file_to_process$position)){
     file <- file_to_process$files[i]
     print(paste0("Loading staging data: ", file))
-    datos_list[[i]] <- fread(os.path.join(staging_path, file ))
+    datos_list[[i]] <- readRDS(os.path.join(staging_path, file ))
   }
   datos <- rbindlist(datos_list, use.names = T)
   rm(datos_list)
@@ -74,7 +74,7 @@ feature_purchase_frequency <- function(month_to_create, staging_path, feature_pa
   print(paste0("removing past purchase frequency ", files_feature))
   file.remove(os.path.join(feature_path, files_feature))
   
-  file_purchase_name <- paste0("purchase_frequencies_", month_to_create , ".csv")
+  file_purchase_name <- paste0("purchase_frequencies_", month_to_create , ".rds")
   print(paste0("Saving ", file_purchase_name))
-  fwrite(purchase.frequencies, file = os.path.join(feature_path, file_purchase_name))
+  saveRDS(purchase.frequencies, file = os.path.join(feature_path, file_purchase_name))
 }

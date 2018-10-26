@@ -155,7 +155,7 @@ staging_maker <- function(month_to_create, threshold = 100000, original_path, st
     datos <- datos[, .SD, .SDcols = c("llave", timeVars, features, crm)]
     setkey(datos, "llave")
     print(paste0("Saving staging table: staging_ ", i))
-    fwrite(datos, file = os.path.join(staging_path, paste0("staging_", i , ".csv")))
+    saveRDS(datos, file = os.path.join(staging_path, paste0("staging_", i , ".rds")))
     rm(datos)
     gc()
   

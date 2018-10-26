@@ -29,7 +29,7 @@ master_maker <- function(month_to_create,
   for(i in 1:length(files_staging$position)){
     file <- files_staging$files[i]
     print(paste0("Loading staging data: ", file))
-    datos_list[[i]] <-  fread(os.path.join(staging_path, file ))
+    datos_list[[i]] <-  readRDS(os.path.join(staging_path, file ))
   }
   datos <- rbindlist(datos_list, use.names = T)
   rm(datos_list)

@@ -132,6 +132,7 @@ set_environment <- function(){
   import_module(os.path.join(dataTransformation, "feature_purchase_frequency.R"))
   import_module(os.path.join(dataTransformation, "months_since_owned.R"))
   import_module(os.path.join(dataTransformation, "master_maker.R"))
+  import_module(os.path.join(dataTransformation, "create_monthly_tables.R"))
   # modeling functions
   models <- "modeling"
   import_module(os.path.join(models, "models_measures.R"))
