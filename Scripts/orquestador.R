@@ -10,10 +10,10 @@ switch(
       create_monthly_tables(current_date = max(dates_to_create), model_type_creation)
   },
   "Scoring" = {
-    scoreMensual(dates_to_score, model_type_score, model_alias_score)
+    score_mensual(dates_to_score, model_type_score, model_alias_score)
   },
   "Training" = {
-    createModel(model_type_modeling)
+    create_model(model_type_modeling)
   },
   stop("It only accepts Creation|Scoring|Training ")
 )
