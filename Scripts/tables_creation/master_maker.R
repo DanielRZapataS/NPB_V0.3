@@ -1,9 +1,17 @@
 #' Make master table for models 
 #clean a process original bases to create month staging table
 #' @param  month_to_create : month to process 
+#'
 #' @param model_type_creation : model type to create; see settings comments 
 #' @param staging_path : path field where staging data places
 #' @param master_path : path field where master data places
+#' @param months_ago : create features indicating whether or not a product was
+#owned in each of the past X months. for each lag, match the month with the
+#earlier one and through some name manipulation extract whether the product was
+#owned or not
+#' @param months.to.seatch :  get the number of months since each product was
+#'   owned. See months_since_owned function
+#'
 #' @return : models type master table 
 
 master_maker <- function(month_to_create, model_type_creation, staging_path,
@@ -25,20 +33,22 @@ master_maker <- function(month_to_create, model_type_creation, staging_path,
   gc()
   
   # eliminate products 
-  null.vars <- c("pr_otros", "pr_vehiculo", "pr_vivienda", "pr_fomento",
-                 "pr_microcredito", "pr_leasing", "pr_activo_pyme", "pr_constructor")
+  null.vars <- c("pr_otros", "pr_vehiculo", "pr_vivienda",
+                 "pr_fomento","pr_microcredito", "pr_leasing", 
+                 "pr_activo_pyme", "pr_constructor")
   datos[, (null.vars) := NULL]
     
   products <- names(datos)[grepl("pr_",names(datos))]
  
-  # create a data frame with just the product ownership variables so we can create lag ownership features
+  # create a data frame with just the product ownership variables so
+  # we can create lag ownership features
   products.owned <- datos %>%
     select(llave,month.id,one_of(products)) %>%
     as.data.table()
   original.month.id <- products.owned$month.id
-  # create features indicating whether or not a product was owned in each of the past
-  # X months. for each lag, match the month with the earlier one and through some name manipulation
-  # extract whether the product was owned or not
+  # create features indicating whether or not a product was owned in each of the
+  # past X months. for each lag, match the month with the earlier one and
+  # through some name manipulation extract whether the product was owned or not
   for (month.ago in 1:months_ago){
     print(paste("Collecting data on product ownership",month.ago,"months ago..."))
     products.owned[,month.id:=original.month.id+month.ago]
@@ -53,8 +63,8 @@ master_maker <- function(month_to_create, model_type_creation, staging_path,
   }
   rm( products.owned)
   gc()
-  # there will be NA values where there isn't a match to the left side since we used 
-  # all.x=TRUE, assume those correspond to products that were not owned
+  # there will be NA values where there isn't a match to the left side since we
+  # used all.x=TRUE, assume those correspond to products that were not owned
   datos[is.na(datos)] <- 0
   
   # get the number of months since each product was owned
@@ -67,9 +77,12 @@ master_maker <- function(month_to_create, model_type_creation, staging_path,
   # save the month id for use creating window ownership features
   # products.owned$month.id <- original.month.id
   
-  # windows of product ownership. For each window size look back at previous months and see if the product was 
-  # ever owned. I do this by adding the value of the ownership variable X months ago for X = 1:window.size
-  # then converting to a binary indicator if the value is positive (meaning it was owned at least once)
+  # windows of product ownership. For each window size look back at previous
+  # months and see if the product was ever owned. I do this by adding the value
+  # of the ownership variable X months ago for X = 1:window.size then converting
+  # to a binary indicator if the value is positive (meaning it was owned at
+  # least once)
+  
   # for (product in products){
   #   for (window.size in 2:3){
   #     print(paste("Getting ownership for",product,"within last",window.size,"months"))
