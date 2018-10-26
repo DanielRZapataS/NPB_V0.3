@@ -4,7 +4,7 @@
     "results_path": "Results",
     "data_path": "Data",
     "log_path": "Logs",
-    "data_cat": ["Dictionary", "Original", "Staging", "Meta"],
+    "data_cat": ["Dictionary", "Original", "Staging", "Meta", "Master"],
     "comment": ["tcredito", "crediservice"]
   },
  
@@ -21,7 +21,7 @@
     "performance_calculation": "TRUE"
   },
   "month_process":{
-    "month_to_create": ["201808"]
+    "month_to_create": ["201809"]
   },
 
   "job":"Creation"

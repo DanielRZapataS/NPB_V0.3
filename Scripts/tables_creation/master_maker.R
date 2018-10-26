@@ -101,7 +101,8 @@ master_maker <- function(month_to_create,
   # 
   # add in purchase frequency feature for each product
   print("Load purchase frequencies")
-  purchase.frequencies <- fread(get.path(feature_path, month_to_create))
+  purchase.frequencies <- readRDS(get.path(feature_path, month_to_create))
+  purchase.frequencies <- data.table(purchase.frequencies)
   # removing products of purchase.feature table 
   null.vars.purchase <- paste0(null.vars, "_purchase.count")
   purchase.frequencies[, (null.vars.purchase) := NULL]
