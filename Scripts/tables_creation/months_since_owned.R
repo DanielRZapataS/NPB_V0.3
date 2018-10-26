@@ -1,5 +1,20 @@
-months_since_owned<- function(datos,products,months.to.search,default.value = 999){
-  
+#' Search number of months since each product was owned
+#'
+#' @param datos : data with costmuers holding products each month (data.table)
+#' @param products : character vector of products of interest
+#' @param months.to.search : month ago to search product holding
+#' @param default.value : default number to fill months before months to search
+#'
+#' @return
+#' @export
+#'
+#' @examples
+months_since_owned <-
+  function(datos,
+           products,
+           months.to.search,
+           default.value = 999) {
+    
   for (product in products){
     print(paste("Finding months since owning",product))
     colname <- paste(product,".last.owned",sep="")

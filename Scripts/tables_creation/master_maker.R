@@ -1,7 +1,6 @@
-#' Make master table for models 
-#clean a process original bases to create month staging table
+#' Make master tables for models 
+#' 
 #' @param  month_to_create : month to process 
-#'
 #' @param model_type_creation : model type to create; see settings comments 
 #' @param staging_path : path field where staging data places
 #' @param master_path : path field where master data places
