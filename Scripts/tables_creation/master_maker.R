@@ -13,8 +13,12 @@
 #'
 #' @return : models type master table 
 
-master_maker <- function(month_to_create, model_type_creation, staging_path,
-                         master_path, months_ago = 3, months.to.seatch = 3){
+master_maker <- function(month_to_create,
+                         staging_path,
+                         master_path,
+                         months_ago = 3,
+                         months.to.seatch = 3) {
+  
   
   #staging
   files_staging <- list.files(staging_path)
@@ -118,46 +122,12 @@ master_maker <- function(month_to_create, model_type_creation, staging_path,
   datos[, aa_cod_ocupacion := factor(aa_cod_ocupacion, 
                                   levels = unique(aa_cod_ocupacion))]
   
-  #### model type master tables ####
-   if(model_type_creation == "tcredito"){
-  #   print(paste("Creating Master table", model_type_creation))
-  #   var_interest <- c("aa_vlr_ing_bru_mes", "aa_vlr_egreso_mes",
-  #                     "age", "antiguedad",  "aa_vlr_activos", 
-  #                     "aa_vlr_pasivos", "aa_estrato")
-  #   var_crm <- crm[crm %in% var_interest]
-  #   mtcredito <- datos[, .SD, .SDcols = c("llave", timeVars, var_crm)]
-     tcredito <-
-       datos[, .(llave,
-                 month.id = month.id - 2,
-                 pr_tcredito_2monthsFurther = pr_tcredito)]
-     tcredito <- merge(datos,tcredito,by=c("llave","month.id"),all.x=TRUE)
-     
-     tcredito_path <- os.path.join(master_path, "tcredito")
-     files_tcredito <- list.files(tcredito_path)
-     print(paste0("removing past master tcredito ", files_tcredito))
-     file.remove(os.path.join(tcredito_path, files_tcredito))
-     
-     file_tcredito_name <- paste0("master_tcredito", month_to_create , ".RData")
-     print(paste0("Saving ", file_tcredito_name))
-     save(tcredito, file = os.path.join(tcredito_path, file_tcredito_name))
-   }
+  files_master <- list.files(master_path)
+  print(paste0("removing past master", files_master))
+  file.remove(os.path.join(master_path, files_master))
   
-  #### model type master tables ####
-  if(model_type_creation == "crediservice"){
+  file_master_name <- paste0("master_", month_to_create , ".rds")
+  print(paste0("Saving ", file_master_name))
+  saveRDS(datos, file = os.path.join(master_path, file_master_name))
 
-    crediservice <-
-      datos[, .(llave,
-                month.id = month.id - 2,
-                pr_crediservice_2monthsFurther = pr_crediservice)]
-    crediservice <- merge(datos,crediservice,by=c("llave","month.id"),all.x=TRUE)
-    
-    crediservice_path <- os.path.join(master_path, "crediservice")
-    files_crediservice <- list.files(crediservice_path)
-    print(paste0("removing past master crediservice ", files_crediservice))
-    file.remove(os.path.join(crediservice_path, files_crediservice))
-    
-    file_crediservice_name <- paste0("master_crediservice", month_to_create , ".csv")
-    print(paste0("Saving ", file_crediservice_name))
-    fwrite(crediservice, file = os.path.join(crediservice_path, file_crediservice_name))
-  }
 }
