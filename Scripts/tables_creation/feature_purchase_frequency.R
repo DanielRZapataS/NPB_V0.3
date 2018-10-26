@@ -1,6 +1,9 @@
 #' feature_purchase_frequency
+#'
 #' @param  month_to_create : month to process 
-#' @param staging_path : path field where staging data places
+#' @param staging_path : path folder where staging data places
+#' @param feature_path : path folder where feature purchase frequency place
+#'
 #' @return : models type master table 
 
 feature_purchase_frequency <- function(month_to_create, staging_path, feature_path){
