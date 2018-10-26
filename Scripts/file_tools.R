@@ -46,6 +46,10 @@ os.path.splitext <- function(path){
 os.path.exists <- file.exists
 
 #' upload files  
+#'
+#' @param path 
+#' @param key_searcher 
+#'
 #' @return path of file searched 
 get.path <- function(path, key_searcher){
   files <- list.files(path)
