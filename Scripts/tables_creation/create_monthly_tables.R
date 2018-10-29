@@ -1,4 +1,4 @@
-#' create monthly tables
+#' create monthly tables. 
 #'
 #' @param month_to_create: current month to model
 #' @param original_path: original path data folder

@@ -1,13 +1,13 @@
 #' Make master tables for models 
 #' 
-#' @param  month_to_create : month to process 
+#' @param  month_to_create : month to process
 #' @param model_type_creation : model type to create; see settings comments 
 #' @param staging_path : path field where staging data places
 #' @param master_path : path field where master data places
 #' @param months_ago : create features indicating whether or not a product was
 #owned in each of the past X months. for each lag, match the month with the
 #earlier one and through some name manipulation extract whether the product was
-#owned or not
+#owned or not (numeric)
 #' @param months.to.seatch :  get the number of months since each product was
 #'   owned. See months_since_owned function
 #'
