@@ -45,6 +45,7 @@ load_paths <- function(){
   results_path   <<- paths$results_path
   log_path <<- paths$log_path
   scripts_path   <<- paths$scripts_path
+  models_path <<- paths$models_path
 }
 
 #' load_model_parameters
@@ -75,8 +76,6 @@ load_scoring_parameters <- function(){
 load_creation_parameters <- function(){
   month_process <- fromJSON("settings.json")$month_process
   month_to_create <<- month_process$month_to_create
-  model_type_creation <<- month_process$model_type_creation
-  
 }
 
 #' load_common_libraries

@@ -7,7 +7,11 @@
 switch(
   job,
   "Creation" = {
-      create_monthly_tables(current_date = max(dates_to_create))
+      create_monthly_tables(month_to_create,
+                            original_path,
+                            staging_path,
+                            feature_path,
+                            master_path)
   },
   "Scoring" = {
     score_mensual(dates_to_score, model_type_score, model_alias_score)
