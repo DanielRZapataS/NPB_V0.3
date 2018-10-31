@@ -137,10 +137,20 @@ set_environment <- function(){
   models <- "modeling"
   import_module(os.path.join(models, "metrics_xgboost.R"))
   import_module(os.path.join(models, "create_model.R"))
+<<<<<<< HEAD
   # scoring function 
   scoring <- "scoring"
   import_module(os.path.join(scoring, "score_mensual.R"))
   
+=======
+  # # utiles functions
+  # utiles <- "utiles"
+  # import_module(os.path.join(utiles, "text_cleaner.R"))
+  # # result function
+  # models <- "Results"
+  # # import_module(os.path.join(models, "resultsFunctions.R"))
+  # 
+>>>>>>> 6eaac10b4a4351b4141d7e74ee42c82048ab1a7a
   # loadDataParameters()
   # Load configuration file and create log
   config <<- fromJSON("settings.json")

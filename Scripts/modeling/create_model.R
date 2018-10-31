@@ -15,10 +15,16 @@
 
 
 create_model <- function(train_months,
+<<<<<<< HEAD
                          test_month,
                          model_alias_modeling,
                          model_type_modeling) {
   print("Upload master table")
+=======
+                         test_months,
+                         model_alias_modeling,
+                         model_type_modeling) {
+>>>>>>> 6eaac10b4a4351b4141d7e74ee42c82048ab1a7a
   master <- get.path(master_path, "master") %>% readRDS()
   
   print("Creating target variable")
@@ -107,7 +113,11 @@ create_model <- function(train_months,
   gc()
   
   # training model
+<<<<<<< HEAD
   print("Training xgboost model")
+=======
+  print("Training xgbost model")
+>>>>>>> 6eaac10b4a4351b4141d7e74ee42c82048ab1a7a
   model <- xgboost(
     data = dtrain,
     nround = 100,
