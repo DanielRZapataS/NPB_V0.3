@@ -6,41 +6,25 @@
     "log_path": "Logs",
     "models_path" : "Models",
     "data_cat": ["Dictionary", "Original", "Staging", "Meta", "Master"],
-<<<<<<< HEAD
     "comment": ["tcredito", "crediservice", "ahorros", "cdt", "corriente", 
                 "libranza", "libredestino", "nomina", "ordinario"]
-=======
-    "comment": ["tcredito", "crediservice", "ahorros", "cdt", "corriente", "libranza", "libredestino", "nomina", "ordinario"]
->>>>>>> 6eaac10b4a4351b4141d7e74ee42c82048ab1a7a
   },
  
  "modeling":{
-    "train_months": ["201709","201804"],
-<<<<<<< HEAD
-    "test_month": ["201805"],
-=======
-    "test_months": ["201805"],
->>>>>>> 6eaac10b4a4351b4141d7e74ee42c82048ab1a7a
-    "model_alias": "20181031_tcredito",
-    "model_type" : "tcredito"
+    "train_months": ["201709","201806"],
+    "test_month": ["201807"],
+    "model_alias": "20181031_crediservice",
+    "model_type" : "crediservice"
   },
   "scoring":{
-    "model_alias_score": "20181031_tcredito",
-<<<<<<< HEAD
+    "model_alias_score": "20181031_crediservice",
     "date_to_score":["201809"],
-=======
-    "dates_to_score":["201807"],
->>>>>>> 6eaac10b4a4351b4141d7e74ee42c82048ab1a7a
-    "model_type_score":"tcredito",
+    "model_type_score":"crediservice",
     "performance_calculation": "FALSE"
   },
   "month_process":{
     "month_to_create": ["201809"]
   },
 
-<<<<<<< HEAD
-  "job":"Scoring"
-=======
   "job":"Training"
->>>>>>> 6eaac10b4a4351b4141d7e74ee42c82048ab1a7a
 }
