@@ -7,13 +7,23 @@
 switch(
   job,
   "Creation" = {
-      create_monthly_tables(current_date = max(dates_to_create))
+      create_monthly_tables(month_to_create,
+                            original_path,
+                            staging_path,
+                            feature_path,
+                            master_path)
   },
   "Scoring" = {
-    score_mensual(dates_to_score, model_type_score, model_alias_score)
+    score_mensual(model_alias_score,
+                  date_to_score,
+                  model_type_score,
+                  performance_calculation)
   },
   "Training" = {
-    create_model(model_type_modeling)
+    create_model(train_months,
+                 test_months,
+                 model_alias_modeling,
+                 model_type_modeling)
   },
   stop("It only accepts Creation|Scoring|Training ")
 )

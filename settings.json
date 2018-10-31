@@ -4,25 +4,27 @@
     "results_path": "Results",
     "data_path": "Data",
     "log_path": "Logs",
+    "models_path" : "Models",
     "data_cat": ["Dictionary", "Original", "Staging", "Meta", "Master"],
-    "comment": ["tcredito", "crediservice"]
+    "comment": ["tcredito", "crediservice", "ahorros", "cdt", "corriente", 
+                "libranza", "libredestino", "nomina", "ordinario"]
   },
  
  "modeling":{
-    "train_months": ["201706","201804"],
-    "test_months": ["201805","201806"],
-    "model_alias": "20181009_tcredito",
+    "train_months": ["201709","201804"],
+    "test_month": ["201805"],
+    "model_alias": "20181031_tcredito",
     "model_type" : "tcredito"
   },
   "scoring":{
-    "model_alias_score": "20181009_tcredito",
-    "dates_to_score":["201807"],
+    "model_alias_score": "20181031_tcredito",
+    "date_to_score":["201809"],
     "model_type_score":"tcredito",
-    "performance_calculation": "TRUE"
+    "performance_calculation": "FALSE"
   },
   "month_process":{
     "month_to_create": ["201809"]
   },
 
-  "job":"Creation"
+  "job":"Scoring"
 }

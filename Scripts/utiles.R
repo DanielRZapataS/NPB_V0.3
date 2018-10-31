@@ -45,6 +45,7 @@ load_paths <- function(){
   results_path   <<- paths$results_path
   log_path <<- paths$log_path
   scripts_path   <<- paths$scripts_path
+  models_path <<- paths$models_path
 }
 
 #' load_model_parameters
@@ -53,7 +54,7 @@ load_paths <- function(){
 load_model_parameters <- function(){
   modeling <- fromJSON("settings.json")$modeling
   train_months <<- modeling$train_months
-  test_months <<- modeling$test_months
+  test_month <<- modeling$test_months
   model_alias_modeling <<- modeling$model_alias
   model_type_modeling <<- modeling$model_type
 }
@@ -64,19 +65,17 @@ load_model_parameters <- function(){
 load_scoring_parameters <- function(){
   scoring <- fromJSON("settings.json")$scoring
   model_alias_scoring <<- scoring$model_alias
-  dates_to_score <<- scoring$dates_to_score
+  date_to_score <<- scoring$date_to_score
   model_type_score <<- scoring$model_type_score
   performance_calculation <<- scoring$performance_calculation
 }
 
-#' load_creation_parameters
-#' Load creation table parameters selected from settings by user
+#' load_scoring_parameters
+#' Load scoring parameters selected from settings by user
 #' @return None (void)
 load_creation_parameters <- function(){
   month_process <- fromJSON("settings.json")$month_process
   month_to_create <<- month_process$month_to_create
-  model_type_creation <<- month_process$model_type_creation
-  
 }
 
 #' load_common_libraries
@@ -97,6 +96,7 @@ load_common_libraries <- function(){
   import("e1071")
   import("DiagrammeR")
   import("pROC")
+  import("ROCR")
 } 
 
 #' Checks if a library is currently installed, installs it if not, and imports it.
@@ -135,16 +135,14 @@ set_environment <- function(){
   import_module(os.path.join(dataTransformation, "create_monthly_tables.R"))
   # modeling functions
   models <- "modeling"
-  import_module(os.path.join(models, "models_measures.R"))
-  # # utiles functions
-  # utiles <- "utiles"
-  # import_module(os.path.join(utiles, "text_cleaner.R"))
-  # # result function
-  # models <- "Results"
-  # # import_module(os.path.join(models, "resultsFunctions.R"))
-  # 
+  import_module(os.path.join(models, "metrics_xgboost.R"))
+  import_module(os.path.join(models, "create_model.R"))
+  # scoring function 
+  scoring <- "scoring"
+  import_module(os.path.join(scoring, "score_mensual.R"))
+  
   # loadDataParameters()
-  # # Load configuration file and create log
+  # Load configuration file and create log
   config <<- fromJSON("settings.json")
   jsontest = toJSON(config, pretty = TRUE, auto_unbox = TRUE)
   write(jsontest, file = os.path.join(config$paths$log_path, 
