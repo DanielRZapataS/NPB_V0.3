@@ -96,6 +96,7 @@ load_common_libraries <- function(){
   import("e1071")
   import("DiagrammeR")
   import("pROC")
+  import("ROCR")
 } 
 
 #' Checks if a library is currently installed, installs it if not, and imports it.
