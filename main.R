@@ -12,3 +12,5 @@ options(prompt="NPB_V0.3> ", continue=" ")
 source("Scripts/utiles.R")
 # Set up paths
 set_environment() 
+# Execute orquestador which handles the process to execute.
+source(os.path.join("scripts", "orquestador.R"))

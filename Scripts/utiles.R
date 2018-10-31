@@ -135,7 +135,8 @@ set_environment <- function(){
   import_module(os.path.join(dataTransformation, "create_monthly_tables.R"))
   # modeling functions
   models <- "modeling"
-  import_module(os.path.join(models, "models_measures.R"))
+  import_module(os.path.join(models, "metrics_xgboost.R"))
+  import_module(os.path.join(models, "create_model.R"))
   # # utiles functions
   # utiles <- "utiles"
   # import_module(os.path.join(utiles, "text_cleaner.R"))
@@ -144,7 +145,7 @@ set_environment <- function(){
   # # import_module(os.path.join(models, "resultsFunctions.R"))
   # 
   # loadDataParameters()
-  # # Load configuration file and create log
+  # Load configuration file and create log
   config <<- fromJSON("settings.json")
   jsontest = toJSON(config, pretty = TRUE, auto_unbox = TRUE)
   write(jsontest, file = os.path.join(config$paths$log_path, 

@@ -17,7 +17,10 @@ switch(
     score_mensual(dates_to_score, model_type_score, model_alias_score)
   },
   "Training" = {
-    create_model(model_type_modeling)
+    create_model(train_months,
+                 test_months,
+                 model_alias_modeling,
+                 model_type_modeling)
   },
   stop("It only accepts Creation|Scoring|Training ")
 )
