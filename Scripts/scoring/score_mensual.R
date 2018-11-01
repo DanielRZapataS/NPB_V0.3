@@ -37,7 +37,7 @@ score_mensual <- function(model_alias_score,
   gc()
   
   # create train and test tables
-  print("Creating train and test tables")
+  print("Creating score tables")
   # converting cutting months
   test_cut <-
     as.Date(paste0(as.character(date_to_score), '01'), format = '%Y%m%d')
@@ -90,8 +90,8 @@ score_mensual <- function(model_alias_score,
   # save model to binary local file
   print("load model")
   model_alias_path <-
-    os.path.join(models_path, model_alias_modeling)
-  model <-  xgb.load(os.path.join(model_alias_path, paste0(model_alias_modeling, ".model")))
+    os.path.join(models_path, model_alias_scoring)
+  model <-  xgb.load(os.path.join(model_alias_path, paste0(model_alias_scoring, ".model")))
   
   test[, pred := predict(model, test_dmatrix)]
   

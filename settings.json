@@ -13,13 +13,13 @@
  "modeling":{
     "train_months": ["201709","201806"],
     "test_month": ["201807"],
-    "model_alias": "20181031_crediservice",
-    "model_type" : "crediservice"
+    "model_alias": "20181101_nomina",
+    "model_type" : "nomina"
   },
   "scoring":{
-    "model_alias_score": "20181031_crediservice",
+    "model_alias": "20181101_libredestino",
     "date_to_score":["201809"],
-    "model_type_score":"crediservice",
+    "model_type_score":"libredestino",
     "performance_calculation": "FALSE"
   },
   "month_process":{

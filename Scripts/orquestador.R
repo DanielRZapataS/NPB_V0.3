@@ -21,7 +21,7 @@ switch(
   },
   "Training" = {
     create_model(train_months,
-                 test_months,
+                 test_month,
                  model_alias_modeling,
                  model_type_modeling)
   },

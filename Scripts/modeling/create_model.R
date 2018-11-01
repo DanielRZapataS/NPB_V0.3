@@ -5,7 +5,7 @@
 #' @param train_months : vector containing the first and last months which model
 #'   will learn from costumer's behaivour, the will cut he master table
 #'   (character)
-#' @param test_months : single month which is use to test the model performance
+#' @param test_month : single month which is use to test the model performance
 #'   (character)
 #' @param model_alias_modeling : Models name choosen by user (character)
 #' @param model_type_modeling : product to be model (character)
@@ -18,7 +18,7 @@ create_model <- function(train_months,
                          test_month,
                          model_alias_modeling,
                          model_type_modeling) {
-  print("Upload master table")  
+  print("Upload master table")
   master <- get.path(master_path, "master") %>% readRDS()
   
   print("Creating target variable")
@@ -48,7 +48,7 @@ create_model <- function(train_months,
   train_cut_min <-
     as.Date(paste0(as.character(train_cut_min), '01'), format = '%Y%m%d')
   test_cut <-
-    as.Date(paste0(as.character(test_months), '01'), format = '%Y%m%d')
+    as.Date(paste0(as.character(test_month), '01'), format = '%Y%m%d')
   
   # divinding master table
   test <- master[periodo == test_cut]
@@ -107,7 +107,6 @@ create_model <- function(train_months,
   gc()
   
   # training model
-
   print("Training xgboost model")
   model <- xgboost(
     data = dtrain,

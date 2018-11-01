@@ -54,7 +54,7 @@ load_paths <- function(){
 load_model_parameters <- function(){
   modeling <- fromJSON("settings.json")$modeling
   train_months <<- modeling$train_months
-  test_month <<- modeling$test_months
+  test_month <<- modeling$test_month
   model_alias_modeling <<- modeling$model_alias
   model_type_modeling <<- modeling$model_type
 }
@@ -140,13 +140,7 @@ set_environment <- function(){
   # scoring function 
   scoring <- "scoring"
   import_module(os.path.join(scoring, "score_mensual.R"))
-  # # utiles functions
-  # utiles <- "utiles"
-  # import_module(os.path.join(utiles, "text_cleaner.R"))
-  # # result function
-  # models <- "Results"
-  # # import_module(os.path.join(models, "resultsFunctions.R"))
-  # 
+  
   # loadDataParameters()
   # Load configuration file and create log
   config <<- fromJSON("settings.json")
