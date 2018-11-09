@@ -36,7 +36,7 @@ master_maker <- function(month_to_create,
   gc()
   
   # eliminate products 
-  null.vars <- c("pr_otros", "pr_vehiculo", "pr_vivienda",
+  null.vars <- c("pr_otros", "pr_corriente", "pr_ordinario",
                  "pr_fomento","pr_microcredito", "pr_leasing", 
                  "pr_activo_pyme", "pr_constructor")
   datos[, (null.vars) := NULL]

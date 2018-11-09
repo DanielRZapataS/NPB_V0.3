@@ -6,25 +6,25 @@
     "log_path": "Logs",
     "models_path" : "Models",
     "data_cat": ["Dictionary", "Original", "Staging", "Meta", "Master"],
-    "comment": ["tcredito", "crediservice", "ahorros", "cdt", "corriente", 
-                "libranza", "libredestino", "nomina", "ordinario"]
+    "comment": ["tcredito", "crediservice", "ahorros", "cdt", "vehiculo", 
+                "libranza", "libredestino", "nomina", "vivienda"]
   },
  
  "modeling":{
     "train_months": ["201709","201806"],
     "test_month": ["201807"],
-    "model_alias": "20181101_nomina",
-    "model_type" : "nomina"
+    "model_alias": "20181108_vivienda",
+    "model_type" : "vivienda"
   },
   "scoring":{
-    "model_alias": "20181101_libredestino",
-    "date_to_score":["201809"],
-    "model_type_score":"libredestino",
-    "performance_calculation": "FALSE"
+    "model_alias": "20181031_crediservice",
+    "date_to_score":["201808"],
+    "model_type_score":"crediservice",
+    "performance_calculation": "TRUE"
   },
   "month_process":{
-    "month_to_create": ["201809"]
+    "month_to_create": ["201810"]
   },
 
-  "job":"Training"
+  "job":"Scoring"
 }

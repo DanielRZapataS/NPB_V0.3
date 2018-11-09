@@ -15,7 +15,17 @@ score_mensual <- function(model_alias_score,
                           date_to_score,
                           model_type_score,
                           performance_calculation ) {
-  print(paste("scoring month", date_to_score))
+  print(paste("Scoring", model_type_score, "of", model_alias_scoring,
+              "month", date_to_score))
+  ifelse(performance_calculation,
+         results_path <- os.path.join(results_path, "Performance"),
+         results_path <- os.path.join(results_path, "Prediction"))
+
+  dir.create(os.path.join(results_path, date_to_score))
+  results_alias_path <-
+    os.path.join(results_path, date_to_score ,model_alias_scoring)
+  dir.create(results_alias_path)
+  
   print("Upload master table")
   master <- get.path(master_path, "master") %>% readRDS()
   
@@ -95,9 +105,6 @@ score_mensual <- function(model_alias_score,
   
   test[, pred := predict(model, test_dmatrix)]
   
-  results_alias_path <-
-    os.path.join(results_path, model_alias_scoring)
-  dir.create(results_alias_path)
   
   if(performance_calculation){
     test[,bucket :=  ntile(-pred, 10)]
@@ -109,7 +116,7 @@ score_mensual <- function(model_alias_score,
     cols <- c(ohe_cols, numeric_cols)
     
     performanceReport(test,
-                      path = results_path,
+                      path = os.path.join(results_path, date_to_score),
                       modelFolder = model_alias_scoring,
                       alias = "score")
     importance_matrix <-
@@ -121,7 +128,8 @@ score_mensual <- function(model_alias_score,
     exportQuantile(
       dt = test[, mget(quantil)],
       mostImp = importance_matrix ,
-      outputPath = os.path.join(results_path, model_alias_scoring, "quantile_score.csv")
+      outputPath = os.path.join(results_path, date_to_score,
+                                model_alias_scoring, "quantile_score.csv")
     )
   
     
