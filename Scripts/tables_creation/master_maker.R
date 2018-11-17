@@ -16,8 +16,8 @@
 master_maker <- function(month_to_create,
                          staging_path,
                          master_path,
-                         months_ago = 3,
-                         months.to.seatch = 3) {
+                         months_ago = 1,
+                         months.to.seatch = 2) {
   
   
   #staging

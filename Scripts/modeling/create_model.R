@@ -20,6 +20,10 @@ create_model <- function(train_months,
                          model_type_modeling) {
   print("Upload master table")
   master <- get.path(master_path, "master") %>% readRDS()
+  non_variables <- names(master)[grepl("last.owned", names(master))]
+  selected_var <- names(master)[names(master) %!in% non_variables]
+  master <- master[,  mget(selected_var)]
+
   
   print("Creating target variable")
   var_target <- paste0("pr_", model_type_modeling)
@@ -78,7 +82,7 @@ create_model <- function(train_months,
       products_variables,
       c("bb_seg_comercial", "aa_cod_ocupacion"))
   
-  
+  print("One hot encoding")
   # one-hot encode the categorical features
   ohe <- dummyVars( ~ ., data = master[, mget(categorical_cols)])
   ohe <-
@@ -88,6 +92,8 @@ create_model <- function(train_months,
   ohe_cols <- colnames(ohe_test)
   ohe_test <- as(data.matrix(ohe_test), "dgCMatrix")
   
+  print("Creating dgc matrixs")
+  gc()
   # separate target
   target_train_dmatrix <-
     as(data.matrix(master$target), 'dgCMatrix')
@@ -96,9 +102,11 @@ create_model <- function(train_months,
   # data to train and predict
   master_dmatrix         <-
     cbind(ohe, data.matrix(master[, mget(numeric_cols)]))
+  rm(ohe)
+  gc()
   test_dmatrix       <-
     cbind(ohe_test, data.matrix(test[, mget(numeric_cols)]))
-  rm(ohe, ohe_test)
+  rm(ohe_test)
   gc()
   
   dtrain <-
