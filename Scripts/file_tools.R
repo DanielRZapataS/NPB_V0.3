@@ -57,3 +57,16 @@ get.path <- function(path, key_searcher){
   searched_path <- os.path.join(path, searched_file)
   return(searched_path)
 }
+
+#' calculate month 
+#'
+#' @param month_back : numbers of month lag of current day 
+#'
+#' @return path of file searched 
+get_month <- function(month_back){
+  current_month <- today() %>% format(., "%Y-%m-%d")
+  previous_month <- floor_date(as.Date(current_month) - months(month_back), "month")
+  previous_month <- substr(previous_month, 1,7)
+  previous_month <- gsub("-", "", previous_month)
+  return(previous_month)
+}

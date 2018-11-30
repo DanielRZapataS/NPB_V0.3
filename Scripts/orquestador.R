@@ -25,5 +25,14 @@ switch(
                  model_alias_modeling,
                  model_type_modeling)
   },
+  "Ensamble" = {
+    create_npb(
+      models_path,
+      models,
+      date_to_predict,
+      performance_npb,
+      results_path,
+      model_alias_npb)
+  },
   stop("It only accepts Creation|Scoring|Training ")
 )

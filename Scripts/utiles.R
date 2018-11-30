@@ -70,12 +70,23 @@ load_scoring_parameters <- function(){
   performance_calculation <<- scoring$performance_calculation
 }
 
-#' load_scoring_parameters
-#' Load scoring parameters selected from settings by user
+#' load_creation_parameters
+#' Load creation parameters selected from settings by user
 #' @return None (void)
 load_creation_parameters <- function(){
   month_process <- fromJSON("settings.json")$month_process
   month_to_create <<- month_process$month_to_create
+}
+
+#' load_npb_parameters
+#' Load npb parameters selected from settings by user
+#' @return None (void)
+load_npb_parameters <- function(){
+  next_product_to_buy <- fromJSON("settings.json")$next_product_to_buy
+  models <<- next_product_to_buy$models
+  model_alias_npb <<- next_product_to_buy$model_alias_npb
+  date_to_predict <<- next_product_to_buy$date_to_predict
+  performance_npb <<- next_product_to_buy$performance
 }
 
 #' load_common_libraries
@@ -122,6 +133,7 @@ set_environment <- function(){
   load_model_parameters()
   load_scoring_parameters()
   load_creation_parameters()
+  load_npb_parameters()
   job <<- fromJSON("settings.json")$job
   source(os.path.join(scripts_path, "text_tools.R"))
   source(os.path.join(scripts_path, "file_tools.R"))
@@ -140,7 +152,7 @@ set_environment <- function(){
   # scoring function 
   scoring <- "scoring"
   import_module(os.path.join(scoring, "score_mensual.R"))
-  
+  import_module(os.path.join(scoring, "create_npb.R"))
   # loadDataParameters()
   # Load configuration file and create log
   config <<- fromJSON("settings.json")
