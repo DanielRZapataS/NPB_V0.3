@@ -28,6 +28,14 @@ score_mensual <- function(model_alias_score,
   
   print("Upload master table")
   master <- get.path(master_path, "master") %>% readRDS()
+  non_variables <- names(master)[grepl("last.owned", names(master))]
+  selected_var <- names(master)[names(master) %!in% non_variables]
+  master <- master[,  mget(selected_var)]
+  
+  test_cut <-
+    as.Date(paste0(as.character(date_to_score), '01'), format = '%Y%m%d')
+  months_cut <- c(test_cut, floor_date(as.Date(test_cut) + months(2), "month"))
+  master <- master[periodo %in% months_cut]
   
   print("Creating target variable")
   var_target <- paste0("pr_", model_type_score)
@@ -42,7 +50,6 @@ score_mensual <- function(model_alias_score,
           all.x = TRUE)
   master[, target := ifelse(var_target_2monthsFurther - get(var_target) > 0, 1, 0)]
   master[, var_target_2monthsFurther := NULL]
-  master[is.na(master)] <- 0
   rm(target)
   gc()
   
@@ -54,6 +61,7 @@ score_mensual <- function(model_alias_score,
   
   # divinding master table
   test <- master[periodo == test_cut]
+  test[is.na(test)] <- 0
   rm(master)
   gc()
   
