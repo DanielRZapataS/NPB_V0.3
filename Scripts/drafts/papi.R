@@ -21,15 +21,15 @@ library(Metrics)
 # load model predictins on test 
 models <-
   c(
-    "20181101_tcredito",
-    "20181031_crediservice",
-    "20181102_ahorros",
-    "20181108_cdt",
-    "20181107_vehiculo",
-    "20181107_libranza",
-    "20181101_libredestino",
-    "20181101_nomina",
-    "20181108_vivienda"
+    "20181128_tcredito",
+    "20181128_crediservice",
+    "20181128_ahorros",
+    "20181128_cdt",
+    "20181128_vehiculo",
+    "20181128_libranza",
+    "20181128_libredestino",
+    "20181129_nomina",
+    "20181129_vivienda"
   )
 
 models_files <- list.files(models_path)
@@ -58,16 +58,9 @@ preds[, count := rowSums(preds[, mget(targets)])]
 probs <- names(preds)[grepl("pred_", names(preds))]
 preds[, prob_mean :=  rowSums(preds[, mget(probs)])]
 preds[, prob_mean := prob_mean / 9]
-qu <- quantile(preds$prob_mean, probs=seq(0,1, by=1/9))
-preds[, prob_quantil := cut(preds$prob_mean, breaks=qu,
-                            labels=names(qu)[-1],
-                            include.lowest=TRUE)]
 
 preds[order(-count)]
 preds[, .N, by = count]
-
-preds[order(-prob_mean)]
-preds[, .N, by = prob_quantil]
 
 
 ############ 
@@ -148,8 +141,17 @@ for(i in 1:9){
 
 mape
 
+mape_aju <- c()
+for(i in 1:9){
+  apk <- products_rec[acq != "", .(apk = apk(i, acq, pred)), by = llave]
+  mape_aju[i] <-  mean(apk$apk)
+}
+
+mape_aju
 
 
 
 
-
+                      
+                      
+                      
