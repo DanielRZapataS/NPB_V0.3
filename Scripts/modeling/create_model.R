@@ -142,6 +142,7 @@ create_model <- function(train_months,
   model_alias_path <-
     os.path.join(models_path, model_alias_modeling)
   dir.create(model_alias_path)
+  fwrite(data_id, os.path.join(model_alias_path, paste0(model_alias_modeling, "_id.csv")))
   xgb.save(model, os.path.join(model_alias_path, paste0(model_alias_modeling, ".model")))
   # model <-  xgb.load(os.path.join(model_alias_path, paste0(model_alias_modeling, ".model")))
   
