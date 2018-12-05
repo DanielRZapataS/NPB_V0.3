@@ -18,6 +18,19 @@ create_model <- function(train_months,
                          test_month,
                          model_alias_modeling,
                          model_type_modeling) {
+  print("Creating id model")
+  data_id <- data.table(var = c("model_alias",
+                                "model_type",
+                                "train_months_since",
+                                "train_months_to",
+                                "test_month"),
+                        value = c(model_alias_modeling,
+                                  model_type_modeling,
+                                  train_months[1],
+                                  train_months[2],
+                                  test_month)
+                        ) 
+  
   print("Upload master table")
   master <- get.path(master_path, "master") %>% readRDS()
   non_variables <- names(master)[grepl("last.owned", names(master))]
