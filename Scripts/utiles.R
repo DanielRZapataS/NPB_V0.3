@@ -108,6 +108,8 @@ load_common_libraries <- function(){
   import("DiagrammeR")
   import("pROC")
   import("ROCR")
+  import("Metrics")
+  import("tictoc")
 } 
 
 #' Checks if a library is currently installed, installs it if not, and imports it.
