@@ -50,6 +50,7 @@ ggsave(filename = "Plots/tenecia_octubre.png", p2)
 
 
 
+
 master[ (pr_nomina > 0 | pr_ahorros > 0 | pr_cdt > 0) &(  
   pr_tcredito == 0 & pr_libranza == 0 & pr_libredestino == 0 & pr_crediservice == 0 & pr_vehiculo == 0 & pr_vivienda == 0)    , .N, by = periodo]
 
@@ -88,5 +89,3 @@ p3 <- uplift_table %>% ggplot(aes(
   geom_text(aes(label=up), vjust=1, color="white", size=3.5)+
   theme_minimal()
 ggsave(filename = "Plots/uplift.png", p3) 
-
-
