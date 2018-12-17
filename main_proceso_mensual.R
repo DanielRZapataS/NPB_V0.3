@@ -22,7 +22,7 @@ tic("NPB")
 
 # First step: Creation job to generate new files
 job <<- "Creation"
-month_to_create <<- today() %>% format(., "%Y%m")
+month_to_create <<- get_month(1)
 # Execute orquestador which handles the process to execute.
 source(os.path.join("scripts", "orquestador.R")) 
 
